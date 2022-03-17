@@ -16,12 +16,12 @@ export const useHomeFetch = () => {
     const [error, setError] = useState(false);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-    const fetchMovies = async (page, searcTerm = "") => {
+    const fetchMovies = async (page, searchTerm = "") => {
         try {
             setError(false);
             setLoading(true);
         
-            const movies = await API.fetchMovies(searcTerm, page);
+            const movies = await API.fetchMovies(searchTerm, page);
 
             setState(prev => ({
                 ...movies,
@@ -42,7 +42,6 @@ export const useHomeFetch = () => {
                 return;
             }
         }
-
         setState(initialState);
         fetchMovies(1, searchTerm);
     }, [searchTerm]);
@@ -51,6 +50,7 @@ export const useHomeFetch = () => {
         if (!isLoadingMore) return;
 
         fetchMovies(state.page + 1, searchTerm);
+        
         setIsLoadingMore(false);
     }, [isLoadingMore, searchTerm, state.page]);
 // SessionStorage
